@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notre Quiz{% endblock %}
+
+{% block body %}
+<div class="min-h-screen flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-lg">
+
+        {# Barre de progression — 7 questions normales + 1 spéciale = 8 étapes #}
+        <div class="mb-8 fade-in">
+            <div class="flex justify-between mb-2">
+                <span class="text-sm text-gray-400 font-light">Notre quiz</span>
+                <span id="progress-text" class="text-sm text-rose-deep font-light">1 / {{ questions|length + 1 }}</span>
+            </div>
+            <div class="w-full bg-rose-soft rounded-full h-2">
+                <div id="progress-bar" class="bg-gradient-to-r from-rose-warm to-rose-deep h-2 rounded-full transition-all duration-700 ease-out" style="width: {{ 100 / (questions|length + 1) }}%"></div>
+            </div>
+        </div>
+
+        {# Zone de quiz #}
+        <div id="quiz-container" class="bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl p-8 md:p-10">
+            {# Questions normales (1 à 7) #}
+            {% for i, q in questions %}
+            <div class="quiz-question {% if i == 0 %}active{% endif %}" data-step="{{ i }}" data-answer="{{ q.answer }}">
+                <div class="text-center mb-8">
+                    <span class="inline-block text-4xl mb-4">💕</span>
+                    <h2 class="font-romantic text-2xl md:text-3xl text-gray-700 leading-relaxed">
+                        {{ q.question }}
+                    </h2>
+                </div>
+
+                <div class="space-y-3">
+                    {% for j, choice in q.choices %}
+                    <button
+                        onclick="submitAnswer({{ i }}, {{ j }})"
+                        class="quiz-choice w-full text-left px-6 py-4 rounded-2xl border-2 border-rose-soft bg-white hover:border-rose-warm hover:bg-rose-soft/50 transition-all duration-300 font-light text-gray-600 hover:text-gray-800 transform hover:scale-[1.02]">
+                        <span class="inline-block w-8 h-8 rounded-full bg-rose-soft text-rose-deep text-center leading-8 text-sm mr-3">{{ ['A','B','C'][j] }}</span>
+                        {{ choice }}
+                    </button>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+
+            {# Question finale spéciale (bouton qui fuit) #}
+            <div id="special-question" class="quiz-question" data-step="special">
+                <div class="text-center mb-8">
+                    <span class="inline-block text-5xl mb-4 heart-pulse">💎</span>
+                    <h2 class="font-romantic text-2xl md:text-3xl text-gray-700 leading-relaxed">
+                        Sima, est-ce que tu es prête à devenir riche avec moi et construire notre empire ensemble ?
+                    </h2>
+                </div>
+
+                <div class="special-buttons-area relative" style="min-height: 160px;">
+                    <button
+                        id="btn-yes"
+                        onclick="acceptFinal()"
+                        class="w-full mb-4 text-center px-6 py-4 rounded-2xl border-2 border-rose-deep bg-gradient-to-r from-rose-warm to-rose-deep text-white font-romantic text-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
+                        Toujours avec toi ❤️
+                    </button>
+
+                    <button
+                        id="btn-no"
+                        class="flee-btn w-full text-center px-6 py-4 rounded-2xl border-2 border-gray-200 bg-white text-gray-400 font-light transition-all duration-200">
+                        Non…
+                    </button>
+                </div>
+            </div>
+
+            {# Message de feedback #}
+            <div id="feedback" class="hidden text-center py-8">
+                <div id="feedback-icon" class="text-5xl mb-4"></div>
+                <p id="feedback-message" class="font-romantic text-xl md:text-2xl text-gray-600 leading-relaxed"></p>
+                <button id="feedback-next" class="hidden mt-6 bg-gradient-to-r from-rose-warm to-rose-deep text-white px-8 py-3 rounded-full shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300" onclick="nextQuestion()">
+                    Continuer
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    const QUIZ_CHECK_URL = '{{ path("quiz_check") }}';
+    const FINAL_URL = '{{ path("final_surprise") }}';
+    const TOTAL_QUESTIONS = {{ questions|length }};
+    const TOTAL_STEPS = {{ questions|length + 1 }};
+</script>
+<script src="/js/quiz.js"></script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Joyeuse Saint-Valentin{% endblock %}
+
+{% block body %}
+<div class="min-h-screen flex items-center justify-center px-4 py-12">
+    <div class="text-center max-w-2xl mx-auto">
+
+        <div class="fade-in mb-10">
+            <span class="text-6xl md:text-7xl heart-pulse inline-block">💖</span>
+        </div>
+
+        <div id="typed-text" class="font-romantic text-xl md:text-2xl lg:text-3xl text-gray-700 leading-relaxed mb-12 min-h-[200px] flex items-center justify-center">
+            <span id="typed-cursor" class="typed-content"></span>
+        </div>
+
+        {# Compteurs #}
+        <div id="counters" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 opacity-0 transition-opacity duration-1000">
+            <div class="bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg p-6 transform hover:scale-105 transition-all duration-500">
+                <div class="text-3xl mb-2">💑</div>
+                <div id="counter-together" class="font-romantic text-4xl md:text-5xl text-rose-deep mb-1">0</div>
+                <p class="text-sm text-gray-400 font-light">jours ensemble</p>
+                <p class="text-xs text-gray-300 mt-1">depuis le 22/10/2018</p>
+            </div>
+
+            <div class="bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg p-6 transform hover:scale-105 transition-all duration-500">
+                <div class="text-3xl mb-2">💍</div>
+                <div id="counter-engaged" class="font-romantic text-4xl md:text-5xl text-rose-deep mb-1">0</div>
+                <p class="text-sm text-gray-400 font-light">jours fiancés</p>
+                <p class="text-xs text-gray-300 mt-1">depuis le 10/01/2026</p>
+            </div>
+        </div>
+
+        {# Bouton Je t'aime #}
+        <div id="love-btn-wrap" class="opacity-0 transition-opacity duration-1000">
+            <button id="love-btn"
+                    onclick="loveBurst()"
+                    class="bg-gradient-to-r from-rose-warm to-rose-deep text-white font-romantic text-xl md:text-2xl px-12 py-5 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-110 transition-all duration-500 hover:from-rose-deep hover:to-pink-600">
+                Je t'aime ❤️
+            </button>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="/js/final.js"></script>
+{% endblock %}
