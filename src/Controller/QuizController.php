@@ -14,7 +14,7 @@ class QuizController extends AbstractController
     private const QUESTIONS = [
         [
             'question' => 'Quel est le prénom de la femme qui fait battre mon cœur chaque jour ?',
-            'choices' => ['Sima', 'Yassmina', 'Hassna'],
+            'choices' => ['Sima', 'Chaimaa', 'Chaimae'],
             'success' => 'Évidemment… il n\'y a que toi, Sima.',
         ],
         [
